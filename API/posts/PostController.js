@@ -35,6 +35,16 @@ exports.create = function (req, res, next) {
         console.log('Request did not have userID');
         errorMessage = errorMessage.concat('Need userID. ');
     }
+    else if(req.body.oAuthID == undefined || !req.body.oAuthID.trim())
+    {
+	console.log('Request did not have Auth ID');
+	errorMessage = errorMessage.concat('Need authID. ');
+    }
+    else if(!User.exists({userID: req.body.userID, oAuthID: req.body.oAuthID}))
+    {
+	console.log('Please Log in to make a post');
+	errorMessage = errorMessage.concat('Need to log in ');
+    }
     if (req.body.tags == undefined || !Array.isArray(req.body.tags) || !req.body.tags.length)
     {
         console.log('Request did not have tags');
@@ -110,6 +120,16 @@ exports.addTranslation = function (req, res, next){
         console.log('Request did not have userID');
         errorMessage = errorMessage.concat('Need userID. ');
     }
+    else if (req.body.oAuthID == undefined || !req.body.oAuth.trim())
+    {
+	console.log('Request did not have oauthID');
+	errorMessage = errorMessage.concat('Need oAuthID');
+    }
+    else if (!User.exists({userID: req.body.userID, oAuthID: req.body.oAuthID}))
+    {
+	console.log('User was not Authorized');
+	errorMessage = errorMessage.concat('Need to log in ');
+    }
     if (req.body.tags == undefined || !Array.isArray(req.body.tags) || !req.body.tags.length)
     {
         console.log('Request did not have tags');
@@ -146,7 +166,6 @@ exports.search = function (req, res, next){
     console.log('Attempting search' + req.params.search_string)
     
     Post.find( { $text: { $search: "\"" + req.params.search_string + "\""}}).then(function(posts){
-        console.log(posts)
         res.send({message: "success!",
                   data: posts })
     }).catch(next)
@@ -161,6 +180,17 @@ exports.votePost = function (req, res, next){
         console.log('Request did not have userID');
         errorMessage = errorMessage.concat('Need userID. ');
     }
+    else if (req.body.oAuthID == undefined || !req.body.oAuth.trim())
+    {
+        console.log('Request did not have oauthID');
+        errorMessage = errorMessage.concat('Need oAuthID');
+    }
+    else if (!User.exists({userID: req.body.userID, oAuthID: req.body.oAuthID}))
+    {
+        console.log('User was not Authorized');
+        errorMessage = errorMessage.concat('Need to log in ');
+    }
+
     if (req.body.vote == undefined)
     {
         console.log('Request did not have vote');
@@ -205,6 +235,17 @@ exports.voteTranslation = function(req, res, next){
         console.log('Request did not have userID');
         errorMessage = errorMessage.concat('Need userID. ');
     }
+    else if (req.body.oAuthID == undefined || !req.body.oAuth.trim())
+    {
+        console.log('Request did not have oauthID');
+        errorMessage = errorMessage.concat('Need oAuthID');
+    }
+    else if (!User.exists({userID: req.body.userID, oAuthID: req.body.oAuthID}))
+    {
+        console.log('User was not Authorized');
+        errorMessage = errorMessage.concat('Need to log in ');
+    }
+
     if (req.body.vote == undefined)
     {
         console.log('Request did not have vote');
@@ -246,6 +287,17 @@ exports.votePostComment = function(req, res, next){
         console.log('Request did not have userID');
         errorMessage = errorMessage.concat('Need userID. ');
     }
+    else if (req.body.oAuthID == undefined || !req.body.oAuth.trim())
+    {
+        console.log('Request did not have oauthID');
+        errorMessage = errorMessage.concat('Need oAuthID');
+    }
+    else if (!User.exists({userID: req.body.userID, oAuthID: req.body.oAuthID}))
+    {
+        console.log('User was not Authorized');
+        errorMessage = errorMessage.concat('Need to log in ');
+    }
+
     if (req.body.vote == undefined)
     {
         console.log('Request did not have vote');
@@ -377,6 +429,17 @@ exports.voteTranslationComment = function(req,res,next){
         console.log('Request did not have userID');
         errorMessage = errorMessage.concat('Need userID. ');
     }
+    else if (req.body.oAuthID == undefined || !req.body.oAuth.trim())
+    {
+        console.log('Request did not have oauthID');
+        errorMessage = errorMessage.concat('Need oAuthID');
+    }
+    else if (!User.exists({userID: req.body.userID, oAuthID: req.body.oAuthID}))
+    {
+        console.log('User was not Authorized');
+        errorMessage = errorMessage.concat('Need to log in ');
+    }
+
     if (req.body.vote == undefined)
     {
         console.log('Request did not have vote');
@@ -420,6 +483,17 @@ exports.flagTranslation = function(req,res,next){
         console.log('Request did not have userID');
         errorMessage = errorMessage.concat('Need userID. ');
     }
+    else if (req.body.oAuthID == undefined || !req.body.oAuth.trim())
+    {
+        console.log('Request did not have oauthID');
+        errorMessage = errorMessage.concat('Need oAuthID');
+    }
+    else if (!User.exists({userID: req.body.userID, oAuthID: req.body.oAuthID}))
+    {
+        console.log('User was not Authorized');
+        errorMessage = errorMessage.concat('Need to log in ');
+    }
+
     // add more check
     if (req.body.flag == undefined)
     {
@@ -543,6 +617,17 @@ exports.votePostCommentReply = function(req,res,next){
         console.log('Request did not have userID');
         errorMessage = errorMessage.concat('Need userID. ');
     }
+    else if (req.body.oAuthID == undefined || !req.body.oAuth.trim())
+    {
+        console.log('Request did not have oauthID');
+        errorMessage = errorMessage.concat('Need oAuthID');
+    }
+    else if (!User.exists({userID: req.body.userID, oAuthID: req.body.oAuthID}))
+    {
+        console.log('User was not Authorized');
+        errorMessage = errorMessage.concat('Need to log in ');
+    }
+
     if (req.body.vote == undefined)
     {
         console.log('Request did not have vote');
@@ -584,6 +669,17 @@ exports.voteTranslationCommentReply = function(req,res,next){
         console.log('Request did not have userID');
         errorMessage = errorMessage.concat('Need userID. ');
     }
+    else if (req.body.oAuthID == undefined || !req.body.oAuth.trim())
+    {
+        console.log('Request did not have oauthID');
+        errorMessage = errorMessage.concat('Need oAuthID');
+    }
+    else if (!User.exists({userID: req.body.userID, oAuthID: req.body.oAuthID}))
+    {
+        console.log('User was not Authorized');
+        errorMessage = errorMessage.concat('Need to log in ');
+    }
+
     if (req.body.vote == undefined)
     {
         console.log('Request did not have vote');
@@ -667,8 +763,8 @@ exports.listPosts =  function(req,res,next){
         postsPerPage = req.params.postsPerPage;
     }
 
-    console.log("getting page " + page + " of posts with " + postsPerPage + " per page");
-    console.log(req.params.postsPerPage)
+    console.log("getting page " + page + " of posts");
+
     Post.aggregate([{$skip: postsPerPage*page},{$limit: postsPerPage},
        {$project: {
            _id: "$_id",
